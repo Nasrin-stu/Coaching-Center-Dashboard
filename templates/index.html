@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduTrack - Coaching Centre Management System</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+
+  <!-- Top Navbar -->
+  <header class="bg-indigo-700 text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <div class="flex items-center space-x-3">
+      <i data-lucide="graduation-cap" class="w-8 h-8 text-yellow-300"></i>
+      <div>
+        <h1 class="text-xl font-bold tracking-tight">EduTrack Portal</h1>
+        <p class="text-xs text-indigo-200">Coaching Centre Admin Dashboard</p>
+      </div>
+    </div>
+    <div class="flex items-center space-x-4 text-sm">
+      <span class="bg-indigo-800 px-3 py-1 rounded-full text-indigo-200 border border-indigo-600">Admin Mode</span>
+      <span class="font-medium">Academic Year 2026</span>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto p-6 space-y-6">
+
+    <!-- KPI / Metric Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Total Enrolled</p>
+          <h3 id="statTotal" class="text-2xl font-bold text-slate-900 mt-1">0</h3>
+        </div>
+        <div class="p-3 bg-indigo-50 text-indigo-600 rounded-lg"><i data-lucide="users" class="w-6 h-6"></i></div>
+      </div>
+
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase text-slate-500 tracking-wider">Active Batches</p>
+          <h3 class="text-2xl font-bold text-slate-900 mt-1">3</h3>
+        </div>
+        <div class="p-3 bg-blue-50 text-blue-600 rounded-lg"><i data-lucide="calendar" class="w-6 h-6"></i></div>
+      </div>
+
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase text-amber-600 tracking-wider">Pending Dues</p>
+          <h3 id="statPending" class="text-2xl font-bold text-amber-600 mt-1">0</h3>
+        </div>
+        <div class="p-3 bg-amber-50 text-amber-600 rounded-lg"><i data-lucide="alert-circle" class="w-6 h-6"></i></div>
+      </div>
+
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase text-emerald-600 tracking-wider">Fees Collected</p>
+          <h3 id="statCollected" class="text-2xl font-bold text-emerald-600 mt-1">₹0</h3>
+        </div>
+        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-lg"><i data-lucide="wallet" class="w-6 h-6"></i></div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Registration Form -->
+      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm lg:col-span-1">
+        <h2 class="text-lg font-bold text-slate-900 mb-1 flex items-center gap-2">
+          <i data-lucide="user-plus" class="w-5 h-5 text-indigo-600"></i> New Admission
+        </h2>
+        <p class="text-xs text-slate-500 mb-5">Register student and assign batch & dues.</p>
+
+        <form id="studentForm" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Student Full Name</label>
+            <input type="text" id="name" required placeholder="e.g. Rahul Sharma"
+              class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Contact Number</label>
+            <input type="tel" id="phone" required placeholder="10-digit mobile" pattern="[0-9]{10}"
+              class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Course</label>
+              <select id="course" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                <option value="Mathematics">Mathematics</option>
+                <option value="Physics">Physics</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Chemistry">Chemistry</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Batch Timing</label>
+              <select id="batch" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                <option value="Morning (7:00 AM)">Morning (7:00 AM)</option>
+                <option value="Afternoon (2:00 PM)">Afternoon (2:00 PM)</option>
+                <option value="Evening (5:30 PM)">Evening (5:30 PM)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Fee Amount (₹)</label>
+              <input type="number" id="feeAmount" required value="5000" min="500" step="500"
+                class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Status</label>
+              <select id="feeStatus" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                <option value="Paid">Paid</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow">
+            Confirm & Save Admission
+          </button>
+        </form>
+      </div>
+
+      <!-- Student Records & Filters Table -->
+      <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm lg:col-span-2 flex flex-col justify-between">
+        <div>
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">Student Directory</h2>
+              <p class="text-xs text-slate-500">Manage admissions, batch details, and generate receipts.</p>
+            </div>
+            <!-- Filter Tabs -->
+            <div class="flex bg-slate-100 p-1 rounded-lg text-xs font-semibold">
+              <button onclick="setFilter('all')" id="btnFilterAll" class="px-3 py-1.5 rounded-md bg-white text-indigo-700 shadow-sm">All</button>
+              <button onclick="setFilter('Pending')" id="btnFilterPending" class="px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900">Pending Fees</button>
+              <button onclick="setFilter('Paid')" id="btnFilterPaid" class="px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900">Paid Only</button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 text-slate-500 uppercase text-xs border-b border-slate-200">
+                <tr>
+                  <th class="py-3 px-3">Student</th>
+                  <th class="py-3 px-3">Course & Batch</th>
+                  <th class="py-3 px-3">Amount</th>
+                  <th class="py-3 px-3">Fee Status</th>
+                  <th class="py-3 px-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody" class="divide-y divide-slate-100">
+                <!-- Dynamic Records Inserted Here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
+          <span>* Data stored persistently in browser storage</span>
+          <button onclick="resetData()" class="hover:text-red-500 underline">Reset Demo Data</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // Initial sample dataset so demo is never empty
+    const initialData = [
+      { id: 1, name: "Pooja Reddy", phone: "9876543210", course: "Mathematics", batch: "Morning (7:00 AM)", amount: 5000, status: "Paid" },
+      { id: 2, name: "Karthik Verma", phone: "9123456780", course: "Computer Science", batch: "Evening (5:30 PM)", amount: 6000, status: "Pending" },
+      { id: 3, name: "Sneha Nair", phone: "9988776655", course: "Physics", batch: "Afternoon (2:00 PM)", amount: 4500, status: "Pending" }
+    ];
+
+    let students = JSON.parse(localStorage.getItem("coaching_students")) || initialData;
+    let currentFilter = "all";
+
+    function saveAndRender() {
+      localStorage.setItem("coaching_students", JSON.stringify(students));
+      renderTable();
+      updateMetrics();
+      lucide.createIcons();
+    }
+
+    function updateMetrics() {
+      document.getElementById("statTotal").innerText = students.length;
+      
+      const pendingCount = students.filter(s => s.status === "Pending").length;
+      document.getElementById("statPending").innerText = pendingCount;
+
+      const totalCollected = students
+        .filter(s => s.status === "Paid")
+        .reduce((sum, s) => sum + Number(s.amount), 0);
+      document.getElementById("statCollected").innerText = `₹${totalCollected.toLocaleString('en-IN')}`;
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById("studentTableBody");
+      tbody.innerHTML = "";
+
+      const filtered = students.filter(s => {
+        if (currentFilter === "all") return true;
+        return s.status === currentFilter;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-slate-400">No records found for this view.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(s => {
+        const isPaid = s.status === "Paid";
+        const row = document.createElement("tr");
+        row.className = "hover:bg-slate-50 transition border-b border-slate-100";
+        row.innerHTML = `
+          <td class="py-3 px-3">
+            <p class="font-bold text-slate-800">${s.name}</p>
+            <p class="text-xs text-slate-400">${s.phone}</p>
+          </td>
+          <td class="py-3 px-3">
+            <span class="font-medium text-slate-700">${s.course}</span>
+            <p class="text-xs text-slate-400">${s.batch}</p>
+          </td>
+          <td class="py-3 px-3 font-semibold text-slate-700">₹${Number(s.amount).toLocaleString('en-IN')}</td>
+          <td class="py-3 px-3">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${isPaid ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+              ${s.status}
+            </span>
+          </td>
+          <td class="py-3 px-3 text-right space-x-1">
+            ${!isPaid ? `<button onclick="markAsPaid(${s.id})" title="Collect Fee" class="text-xs px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded font-medium">Mark Paid</button>` : ''}
+            <button onclick="printReceipt('${s.name}', '${s.course}', ${s.amount}, '${s.status}')" title="Print Receipt" class="text-xs px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded">Receipt</button>
+            <button onclick="deleteStudent(${s.id})" title="Delete" class="text-xs px-2 py-1 text-red-500 hover:bg-red-50 rounded">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Form submission
+    document.getElementById("studentForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const newStudent = {
+        id: Date.now(),
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        course: document.getElementById("course").value,
+        batch: document.getElementById("batch").value,
+        amount: Number(document.getElementById("feeAmount").value),
+        status: document.getElementById("feeStatus").value
+      };
+
+      students.unshift(newStudent);
+      saveAndRender();
+      e.target.reset();
+    });
+
+    function markAsPaid(id) {
+      students = students.map(s => s.id === id ? { ...s, status: "Paid" } : s);
+      saveAndRender();
+    }
+
+    function deleteStudent(id) {
+      if(confirm("Are you sure you want to remove this student?")) {
+        students = students.filter(s => s.id !== id);
+        saveAndRender();
+      }
+    }
+
+    function setFilter(type) {
+      currentFilter = type;
+      ['All', 'Pending', 'Paid'].forEach(tab => {
+        const btn = document.getElementById('btnFilter' + tab);
+        if (tab.toLowerCase() === type.toLowerCase()) {
+          btn.className = "px-3 py-1.5 rounded-md bg-white text-indigo-700 shadow-sm font-semibold";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-md text-slate-600 hover:text-slate-900";
+        }
+      });
+      renderTable();
+    }
+
+    function printReceipt(name, course, amount, status) {
+      alert(`===============================\n      OFFICIAL FEE RECEIPT     \n===============================\nStudent: ${name}\nCourse:  ${course}\nAmount:  ₹${amount}\nStatus:  ${status.toUpperCase()}\nDate:    ${new Date().toLocaleDateString()}\n===============================`);
+    }
+
+    function resetData() {
+      localStorage.removeItem("coaching_students");
+      students = [...initialData];
+      saveAndRender();
+    }
+
+    // Initialize on load
+    saveAndRender();
+  </script>
+</body>
+</html>
